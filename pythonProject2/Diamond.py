@@ -11,6 +11,7 @@ class Diamond:
         self.size = [20, 20]
         self.image = diamond_image
 
+    @staticmethod
     def check_diamond_collision(player, collection):
         for element in collection:
             if (player.position[0] < element.position[0] + element.size[0] and
@@ -18,9 +19,10 @@ class Diamond:
                     player.position[1] < element.position[1] + element.size[1] and
                     player.position[1] + player.size[1] > element.position[1]):
                 element.hide()
-            else:
-                return False
-            return True
+                return True  # Return True if collision is detected
+        return False  # Return False if no collision is detected
+
+
 
     def hide(self):
         self.position = [-100, -100]
