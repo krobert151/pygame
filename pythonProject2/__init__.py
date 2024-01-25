@@ -1,21 +1,31 @@
+import random
+
 import pygame
 
+from Backpack import BackPack
+from Player import Player
 from Scenery import Scenery
 
 if __name__ == '__main__':
 
     pygame.init()
 
-    background_image = pygame.image.load("image/first_zone.png")
+    background_image = pygame.image.load("media/image/first_zone.png")
     background_image = pygame.transform.scale(background_image, (1480, 860))
-
-    stone_block = pygame.image.load("image/wall.png")
-    leaft_block = pygame.image.load("image/leaft.png")
-
+    rambo_image = pygame.image.load("media/image/rambo.png")
+    rambo_image = pygame.transform.scale(rambo_image, (50, 50))
+    stone_block = pygame.image.load("media/image/wall.png")
+    leaf_block = pygame.image.load("media/image/leaft.png")
+    backpack_image = pygame.image.load("media/image/backpack.png")
+    backpack_image = pygame.transform.scale(backpack_image, (50, 50))
     stone_block = pygame.transform.scale(stone_block, (20, 20))
-    leaft_block = pygame.transform.scale(leaft_block, (20, 20))
+    leaf_block = pygame.transform.scale(leaf_block, (20, 20))
 
-    hobbiton_scene = Scenery('media/maps/hobbiton.csv', background_image, leaft_block, [150, 280], 5, 300)
+    backpack = BackPack([random.randint(0, 1460), random.randint(0, 840)], [20, 20], backpack_image)
+
+    player = Player(300, [150, 280], [50, 50], rambo_image, 300, [150, 280], 0, backpack)
+
+    hobbiton_scene = Scenery('media/maps/hobbiton.csv', background_image, [150, 280], 5,5, player)
 
     map = hobbiton_scene
 
@@ -29,7 +39,7 @@ if __name__ == '__main__':
     while game_running:
         game_running = map.handle_events()
 
-        if map.live_bar < 1:
+        if map.player.live_bar < 1:
             game_running = False
 
         if not map.update():
