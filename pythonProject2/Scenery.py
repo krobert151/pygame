@@ -23,9 +23,9 @@ health_potion = pygame.transform.scale(health_potion, (50, 50))
 
 
 class Scenery:
-    def __init__(self, map_filename, background_image, spawn, diamond_count, health_potion_count, player):
+    def __init__(self, map_filename, background_image, spawn, consumable_file, player):
         self.obstacles = self.load_obstacle_map(map_filename)
-        self.consumable_list = self.instance_consumable(diamond_count, health_potion_count)
+        self.consumable_list = self.instance_consumable(consumable_file)
         self.spawn = spawn.copy()
         self.player = player
         self.background_image = background_image
@@ -33,47 +33,58 @@ class Scenery:
         self.font = pygame.font.Font(None, 36)
 
     @staticmethod
-    def instance_consumable(diamond_counts, potion_counts):
+    def instance_consumable(consumable_file):
 
-        consubamble = []
+        consumables = []
 
-        diamond_list = [Diamond([random.randint(0, 1460), random.randint(0, 840)], [20, 20], diamond_block) for _ in
-                        range(diamond_counts)]
+        # Read consumable information from CSV file
+        with open(consumable_file, newline='') as csvfile:
+            consumables_data = list(csv.reader(csvfile))
 
-        health_potion_list = [
-            Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], health_potion, "HP(10)") for
-            _ in range(potion_counts)]
+            for row in consumables_data:
+                consumable_type = row[0].strip()
+                quantity = int(row[1])
 
-        for diamond in diamond_list:
-            consubamble.append(diamond)
+                for _ in range(quantity):
+                    if consumable_type == 'Diamond':
+                        consumables.append(
+                            Diamond([random.randint(0, 1460), random.randint(0, 840)], [20, 20], diamond_block))
+                    elif consumable_type == 'HealthPotion+10':
+                        consumables.append(
+                            Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], health_potion,
+                                   "HP(10)"))
 
-        for potion in health_potion_list:
-            consubamble.append(potion)
-
-        return consubamble
-
+        return consumables
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_d:
                     self.player.right = True
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_a:
                     self.player.left = True
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_w:
                     self.player.up = True
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_s:
                     self.player.down = True
+                elif event.key == pygame.K_e and self.player.backpack.equipped:
+                    self.player.inventory = not self.player.inventory
+                elif self.player.inventory:
+                    if pygame.K_0 <= event.key <= pygame.K_9:
+                        index = event.key - pygame.K_0 - 1# Subtract 1 to convert from 1-9 to 0-8
+                        self.player.backpack.consume_item_by_index(index)
+
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_d:
                     self.player.right = False
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_a:
                     self.player.left = False
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_w:
                     self.player.up = False
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_s:
                     self.player.down = False
+
         return True
 
     def update(self):
@@ -116,35 +127,39 @@ class Scenery:
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.background_image, (0, 0))
 
-        pygame.draw.rect(self.screen, (0, 0, 0), (880, 700, 600, 200))
-
-        printable_items = {}
-        for item in self.player.backpack.items:
-
-            if item.image not in printable_items:
-                printable_items[item.image] = 1
-            else:
-                printable_items[item.image] += 1
+        pygame.draw.rect(self.screen, (0, 0, 0), (880, 20, 600, 100))
+        text = self.font.render("Score: " + str(self.player.score), 1, (255, 255, 255))
+        self.screen.blit(text, (900, 60))
 
 
-        print(printable_items)
-        c = 1
-        for item in printable_items:
+        if self.player.inventory:
+            pygame.draw.rect(self.screen, (0, 0, 0), (20, 20, 600, 50))
 
-            image = pygame.transform.scale(item,(20,20))
-            self.screen.blit(image, [1100+30*c, 810])
-            self.screen.blit(self.font.render(str(item.get(item)),1, (255, 255, 255)),[1100+60*c, 810])
-            c +=1
+            printable_items = {}
+            for item in self.player.backpack.items:
+
+                if item.image not in printable_items:
+                    printable_items[item.image] = 1
+                else:
+                    printable_items[item.image] += 1
+
+            c = 1
+            for image, quantity in printable_items.items():  # Use items() to iterate over both key and value
+                image = pygame.transform.scale(image, (20, 20))
+                self.screen.blit(image, [20 + 20 * c, 30])
+                self.screen.blit(self.font.render(str(quantity), 1, (255, 255, 255)), [20 + 40 * c, 30])
+                c += 1
+
         c = 0
         while c < self.player.live_bar:
             pygame.draw.rect(self.screen, (255, 0, 0),
-                             (1100 + c, 730, 1, 20))
+                             (1100 + c, 40, 1, 20))
             c += 1
 
         c = 0
         while c < self.player.breath:
             pygame.draw.rect(self.screen, (0, 0, 255),
-                             (1100 + c, 770, 1, 20))
+                             (1099 + c, 80, 1, 20))
             c += 1
 
         for consumable in self.consumable_list:
@@ -152,14 +167,12 @@ class Scenery:
 
         for object in self.obstacles:
             self.screen.blit(object.image, (object.position[0], object.position[1]))
-
-        self.screen.blit(self.player.backpack.image,
-                         (self.player.backpack.position[0], self.player.backpack.position[1]))
+        if not self.player.backpack.equipped:
+            self.screen.blit(self.player.backpack.image,
+                             (self.player.backpack.position[0], self.player.backpack.position[1]))
 
         self.screen.blit(self.player.image, (self.player.position[0], self.player.position[1]))
 
-        # Draw score
-        text = self.font.render("Score: " + str(self.player.score), 1, (255, 255, 255))
-        self.screen.blit(text, (900, 730))
+
 
         pygame.display.flip()

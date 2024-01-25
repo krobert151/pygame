@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     player = Player(300, [150, 280], [50, 50], rambo_image, 300, [150, 280], 0, backpack)
 
-    hobbiton_scene = Scenery('media/maps/hobbiton.csv', background_image, [150, 280], 5,5, player)
+    hobbiton_scene = Scenery('media/maps/hobbiton.csv', background_image, [150, 280],'media/items/hobbiton.csv', player)
 
     map = hobbiton_scene
 

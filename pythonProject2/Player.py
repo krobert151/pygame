@@ -22,6 +22,7 @@ class Player(Character):
         self.left = False
         self.up = False
         self.down = False
+        self.inventory = False
 
     def move(self):
         if self.right:
@@ -74,8 +75,10 @@ class Player(Character):
                     get_diamond_sound.set_volume(1)
                     get_diamond_sound.play()
                 elif isinstance(element, Potion):
-                    if player.backpack.equipped:
-                        player.backpack.items.append(element)
+                    if player.backpack.equipped and player.backpack.add_item(element):
+                        pickup_back_pack_sound = pygame.mixer.Sound("media/audio/pickup_back_pack.mp3")
+                        pickup_back_pack_sound.set_volume(1)
+                        pickup_back_pack_sound.play()
                         element.hide()
                 return True
         return False
@@ -85,9 +88,14 @@ class Player(Character):
                 and self.position[0] + self.size[0] > self.backpack.position[0]
                 and self.position[1] < self.backpack.position[1] + self.backpack.size[1]
                 and self.position[1] + self.size[1] > self.backpack.position[1]):
+            if not self.backpack.equipped:
+                pickup_back_pack_sound = pygame.mixer.Sound("media/audio/pickup_back_pack.mp3")
+                pickup_back_pack_sound.set_volume(1)
+                pickup_back_pack_sound.play()
             self.backpack.position = [1100, 800]
             self.backpack.image = pygame.transform.scale(self.backpack.image, (30, 30))
             self.backpack.equipped = True
+
 
             return True
         return False
