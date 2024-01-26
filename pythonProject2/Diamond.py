@@ -1,7 +1,7 @@
-from Object import Object
+from Consumable import Consumable
 
 
-class Diamond(Object):
+class Diamond(Consumable):
 
     pass
 

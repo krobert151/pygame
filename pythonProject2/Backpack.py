@@ -21,25 +21,18 @@ class BackPack(Object):
             return True
         return False
 
-    def consume_item_by_index(self, index):
+    def consume_item_by_index(self, index, player, scenery):
         items_list = list(self.items.keys())
         if 0 <= index < len(items_list):
             consumed_item = items_list[index]
-            if self.consume_item(consumed_item):
+            if self.consume_item(consumed_item, player):
+                consumed_item.consume(player, scenery)
 
-                # Implement your logic for consuming the item (e.g., incrementing player stats, etc.)
-                print(f"Consumed item: {consumed_item}")
-        else:
-            print("Invalid index")
-
-    def consume_item(self, item):
+    def consume_item(self, item, player):
         if item in self.items and self.items[item] > 0:
             self.items[item] -= 1
             if self.items[item] == 0:
                 self.items.pop(item)
-            # Implement your logic for consuming the item (e.g., incrementing player stats, etc.)
-            print(f"Consumed item: {item}")
             return True
         else:
-            print("Item not found or no more left.")
             return False

@@ -1,5 +1,6 @@
 import pygame
 
+from Boom import Boom
 from Character import Character
 from Diamond import Diamond
 from Potion import Potion
@@ -56,9 +57,9 @@ class Player(Character):
 
                     if player.breath < 1:
                         player.live_bar -= 1
-                return True  # Return True if collision is detected
+                return True
             player.speed = 10
-        return False  # Return False if no collision is detected
+        return False
 
     @staticmethod
     def check_consumable_object_collision(player, collection):
@@ -79,6 +80,9 @@ class Player(Character):
                         pickup_back_pack_sound = pygame.mixer.Sound("media/audio/pickup_back_pack.mp3")
                         pickup_back_pack_sound.set_volume(1)
                         pickup_back_pack_sound.play()
+                        element.hide()
+                elif isinstance(element, Boom):
+                    if player.backpack.equipped and player.backpack.add_item(element):
                         element.hide()
                 return True
         return False

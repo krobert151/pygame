@@ -3,6 +3,7 @@ import random
 
 import pygame
 
+from Boom import Boom
 from Potion import Potion
 from Wall import Wall
 from Diamond import Diamond
@@ -14,12 +15,16 @@ leaf_block = pygame.image.load("media/image/leaft.png")
 diamond_block = pygame.image.load("media/image/diamond.png")
 water_block = pygame.image.load("media/image/water.png")
 health_potion = pygame.image.load("media/image/healht_potion.png")
+water_potion = pygame.image.load("media/image/water_potion.png")
+boom = pygame.image.load("media/image/boom.png")
 
 diamond_block = pygame.transform.scale(diamond_block, (20, 20))
 stone_block = pygame.transform.scale(stone_block, (20, 20))
 leaf_block = pygame.transform.scale(leaf_block, (20, 20))
 water_block = pygame.transform.scale(water_block, (20, 20))
 health_potion = pygame.transform.scale(health_potion, (50, 50))
+water_potion = pygame.transform.scale(water_potion, (20, 20))
+boom = pygame.transform.scale(boom, (20, 20))
 
 
 class Scenery:
@@ -53,8 +58,17 @@ class Scenery:
                         consumables.append(
                             Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], health_potion,
                                    "HP(10)"))
+                    elif consumable_type == 'WaterPotion':
+                        consumables.append(
+                            Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], water_potion,
+                                   "O"))
+                    elif consumable_type == 'Boom':
+                        consumables.append(
+                            Boom([random.randint(0, 1460), random.randint(0, 840)], [50, 50], boom,
+                                   5))
 
         return consumables
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -72,8 +86,8 @@ class Scenery:
                     self.player.inventory = not self.player.inventory
                 elif self.player.inventory:
                     if pygame.K_0 <= event.key <= pygame.K_9:
-                        index = event.key - pygame.K_0 - 1# Subtract 1 to convert from 1-9 to 0-8
-                        self.player.backpack.consume_item_by_index(index)
+                        index = event.key - pygame.K_0 - 1
+                        self.player.backpack.consume_item_by_index(index, self.player, self)
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_d:
@@ -114,11 +128,9 @@ class Scenery:
                 block_type = row['type'].lower()
 
                 if block_type == 'stone_block':
-                    object.append(Wall([x, y], [20, 20], stone_block))
-                elif block_type == 'diamond':
-                    object.append(Diamond([x, y], [20, 20], leaf_block))
+                    object.append(Wall([x, y], [20, 20], stone_block,False))
                 elif block_type == 'leaf_block':
-                    object.append(Wall([x, y], [20, 20], leaf_block))
+                    object.append(Wall([x, y], [20, 20], leaf_block, True))
                 elif block_type == "water_block":
                     object.append(Water([x, y], [20, 20], water_block))
         return object
@@ -130,6 +142,7 @@ class Scenery:
         pygame.draw.rect(self.screen, (0, 0, 0), (880, 20, 600, 100))
         text = self.font.render("Score: " + str(self.player.score), 1, (255, 255, 255))
         self.screen.blit(text, (900, 60))
+
 
 
         if self.player.inventory:
@@ -144,10 +157,10 @@ class Scenery:
                     printable_items[item.image] += 1
 
             c = 1
-            for image, quantity in printable_items.items():  # Use items() to iterate over both key and value
+            for image, quantity in printable_items.items():
                 image = pygame.transform.scale(image, (20, 20))
-                self.screen.blit(image, [20 + 20 * c, 30])
-                self.screen.blit(self.font.render(str(quantity), 1, (255, 255, 255)), [20 + 40 * c, 30])
+                self.screen.blit(image, [40 * c, 30])
+                self.screen.blit(self.font.render(str(quantity), 1, (255, 255, 255)), [60 * c, 30])
                 c += 1
 
         c = 0
@@ -172,7 +185,5 @@ class Scenery:
                              (self.player.backpack.position[0], self.player.backpack.position[1]))
 
         self.screen.blit(self.player.image, (self.player.position[0], self.player.position[1]))
-
-
 
         pygame.display.flip()
