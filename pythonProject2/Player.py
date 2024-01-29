@@ -3,7 +3,7 @@ import pygame
 from Boom import Boom
 from Character import Character
 from Diamond import Diamond
-wwwwwwdwfrom Potion import Potion
+from Potion import Potion
 from Wall import Wall
 from Water import Water
 
