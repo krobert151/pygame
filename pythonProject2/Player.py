@@ -47,7 +47,9 @@ class Player(Character):
                 if isinstance(element, Wall):
                     player.score -= 1
                     player.live_bar -= 30
-                    Media.wallCollision()
+                    first_zone_music = pygame.mixer.Sound('media/audio/metal_pipe_falling.mp3')
+                    first_zone_music.set_volume(1)
+                    first_zone_music.play()
                     player.position = spawn
                 elif isinstance(element, Water):
                     player.speed = 2

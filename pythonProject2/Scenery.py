@@ -11,7 +11,7 @@ from Player import Player
 from Water import Water
 
 stone_block = pygame.image.load("media/image/wall.png")
-leaf_block = pygame.image.load("media/image/leaft.png")
+cobblestone_block = pygame.image.load("media/image/cobblestone.png")
 diamond_block = pygame.image.load("media/image/diamond.png")
 water_block = pygame.image.load("media/image/water.png")
 health_potion = pygame.image.load("media/image/healht_potion.png")
@@ -20,9 +20,9 @@ boom = pygame.image.load("media/image/boom.png")
 
 diamond_block = pygame.transform.scale(diamond_block, (20, 20))
 stone_block = pygame.transform.scale(stone_block, (20, 20))
-leaf_block = pygame.transform.scale(leaf_block, (20, 20))
+cobblestone_block = pygame.transform.scale(cobblestone_block, (20, 20))
 water_block = pygame.transform.scale(water_block, (20, 20))
-health_potion = pygame.transform.scale(health_potion, (50, 50))
+health_potion = pygame.transform.scale(health_potion, (20, 20))
 water_potion = pygame.transform.scale(water_potion, (20, 20))
 boom = pygame.transform.scale(boom, (20, 20))
 
@@ -56,7 +56,7 @@ class Scenery:
                             Diamond([random.randint(0, 1460), random.randint(0, 840)], [20, 20], diamond_block))
                     elif consumable_type == 'HealthPotion+10':
                         consumables.append(
-                            Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], health_potion,
+                            Potion([random.randint(0, 1460), random.randint(0, 840)], [20, 20], health_potion,
                                    "HP(10)"))
                     elif consumable_type == 'WaterPotion':
                         consumables.append(
@@ -129,8 +129,8 @@ class Scenery:
 
                 if block_type == 'stone_block':
                     object.append(Wall([x, y], [20, 20], stone_block,False))
-                elif block_type == 'leaf_block':
-                    object.append(Wall([x, y], [20, 20], leaf_block, True))
+                elif block_type == 'cobblestone_block':
+                    object.append(Wall([x, y], [20, 20], cobblestone_block, True))
                 elif block_type == "water_block":
                     object.append(Water([x, y], [20, 20], water_block))
         return object
@@ -160,7 +160,7 @@ class Scenery:
             for image, quantity in printable_items.items():
                 image = pygame.transform.scale(image, (20, 20))
                 self.screen.blit(image, [40 * c, 30])
-                self.screen.blit(self.font.render(str(quantity), 1, (255, 255, 255)), [60 * c, 30])
+                self.screen.blit(self.font.render(str(quantity), 1, (255, 255, 255)), [(40 * c) + 20, 30])
                 c += 1
 
         c = 0
