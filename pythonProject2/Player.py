@@ -3,6 +3,7 @@ import pygame
 from Boom import Boom
 from Character import Character
 from Diamond import Diamond
+from Media import Media
 from Potion import Potion
 from Wall import Wall
 from Water import Water
@@ -47,9 +48,7 @@ class Player(Character):
                 if isinstance(element, Wall):
                     player.score -= 1
                     player.live_bar -= 30
-                    metal_pipe = pygame.mixer.Sound('media/audio/metal_pipe_falling.mp3')
-                    metal_pipe.set_volume(1)
-                    metal_pipe.play()
+                    Media.wallCollision()
                     player.position = spawn
                 elif isinstance(element, Water):
                     player.speed = 2
