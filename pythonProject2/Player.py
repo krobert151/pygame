@@ -1,5 +1,6 @@
 import pygame
 
+import Media
 from Boom import Boom
 from Character import Character
 from Diamond import Diamond
@@ -47,9 +48,7 @@ class Player(Character):
                 if isinstance(element, Wall):
                     player.score -= 1
                     player.live_bar -= 30
-                    first_zone_music = pygame.mixer.Sound('media/audio/metal_pipe_falling.mp3')
-                    first_zone_music.set_volume(1)
-                    first_zone_music.play()
+                    Media.MusicBox.metalPipe()
                     player.position = spawn
                 elif isinstance(element, Water):
                     player.speed = 2
@@ -72,14 +71,10 @@ class Player(Character):
                     element.hide()
                     player.score += 1
                     collection.remove(element)
-                    get_diamond_sound = pygame.mixer.Sound('media/audio/get_diamonds.mp3')
-                    get_diamond_sound.set_volume(1)
-                    get_diamond_sound.play()
+                    Media.MusicBox.getDiamondSound()
                 elif isinstance(element, Potion):
                     if player.backpack.equipped and player.backpack.add_item(element):
-                        pickup_back_pack_sound = pygame.mixer.Sound("media/audio/pickup_back_pack.mp3")
-                        pickup_back_pack_sound.set_volume(1)
-                        pickup_back_pack_sound.play()
+                        Media.MusicBox.backPackSound()
                         element.hide()
                 elif isinstance(element, Boom):
                     if player.backpack.equipped and player.backpack.add_item(element):
@@ -93,9 +88,7 @@ class Player(Character):
                 and self.position[1] < self.backpack.position[1] + self.backpack.size[1]
                 and self.position[1] + self.size[1] > self.backpack.position[1]):
             if not self.backpack.equipped:
-                pickup_back_pack_sound = pygame.mixer.Sound("media/audio/pickup_back_pack.mp3")
-                pickup_back_pack_sound.set_volume(1)
-                pickup_back_pack_sound.play()
+                Media.MusicBox.backPackSound()
             self.backpack.position = [1100, 800]
             self.backpack.image = pygame.transform.scale(self.backpack.image, (30, 30))
             self.backpack.equipped = True

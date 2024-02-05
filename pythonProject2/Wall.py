@@ -1,7 +1,7 @@
-from Object import Object
+from Item import Item
 
 
-class Wall(Object):
+class Wall(Item):
     def __init__(self, position, size, image, breakable):
         super().__init__(position, size, image)
         self.position = position

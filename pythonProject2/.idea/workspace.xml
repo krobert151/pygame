@@ -5,14 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38447549-c2b6-42d6-87c7-66976f9f811e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Media.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/image/first_zone.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backpack.py" beforeDir="false" afterPath="$PROJECT_DIR$/Backpack.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Consumable.py" beforeDir="false" afterPath="$PROJECT_DIR$/Consumable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Object.py" beforeDir="false" afterPath="$PROJECT_DIR$/Item.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Orc.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scenery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scenery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/image/first_zone.png" beforeDir="false" afterPath="$PROJECT_DIR$/media/image/first_zone.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/image/healht_potion.png" beforeDir="false" afterPath="$PROJECT_DIR$/media/image/healht_potion.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/image/rambo2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/image/water_potion.png" beforeDir="false" afterPath="$PROJECT_DIR$/media/image/water_potion.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/maps/hobbiton.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/maps/hobbiton.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wall.py" beforeDir="false" afterPath="$PROJECT_DIR$/Wall.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Water.py" beforeDir="false" afterPath="$PROJECT_DIR$/Water.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/audio/first_zone.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/assets/audio/first_zone.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/audio/get_diamonds.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/assets/audio/get_diamonds.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/audio/glup_glup.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/assets/audio/glup_glup.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/audio/metal_pipe_falling.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/assets/audio/metal_pipe_falling.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/audio/pickup_back_pack.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/assets/audio/pickup_back_pack.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/backpack.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/backpack.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/boom.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/boom.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/cobblestone.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/cobblestone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/diamond.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/diamond.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/first_zone.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/healht_potion.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/healht_potion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/leaft.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/leaft.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/rambo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/rambo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/wall.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/wall.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/water.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/water.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/image/water_potion.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/image/water_potion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/items/hobbiton.csv" beforeDir="false" afterPath="$PROJECT_DIR$/assets/items/hobbiton.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/maps/hobbiton.csv" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/hobbiton.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -3,28 +3,13 @@ import random
 
 import pygame
 
+import Media
 from Boom import Boom
 from Potion import Potion
 from Wall import Wall
 from Diamond import Diamond
 from Player import Player
 from Water import Water
-
-stone_block = pygame.image.load("media/image/wall.png")
-cobblestone_block = pygame.image.load("media/image/cobblestone.png")
-diamond_block = pygame.image.load("media/image/diamond.png")
-water_block = pygame.image.load("media/image/water.png")
-health_potion = pygame.image.load("media/image/healht_potion.png")
-water_potion = pygame.image.load("media/image/water_potion.png")
-boom = pygame.image.load("media/image/boom.png")
-
-diamond_block = pygame.transform.scale(diamond_block, (20, 20))
-stone_block = pygame.transform.scale(stone_block, (20, 20))
-cobblestone_block = pygame.transform.scale(cobblestone_block, (20, 20))
-water_block = pygame.transform.scale(water_block, (20, 20))
-health_potion = pygame.transform.scale(health_potion, (20, 20))
-water_potion = pygame.transform.scale(water_potion, (20, 20))
-boom = pygame.transform.scale(boom, (20, 20))
 
 
 class Scenery:
@@ -53,19 +38,19 @@ class Scenery:
                 for _ in range(quantity):
                     if consumable_type == 'Diamond':
                         consumables.append(
-                            Diamond([random.randint(0, 1460), random.randint(0, 840)], [20, 20], diamond_block))
+                            Diamond([random.randint(0, 1460), random.randint(0, 840)], [20, 20], Media.diamond_block))
                     elif consumable_type == 'HealthPotion+10':
                         consumables.append(
-                            Potion([random.randint(0, 1460), random.randint(0, 840)], [20, 20], health_potion,
+                            Potion([random.randint(0, 1460), random.randint(0, 840)], [20, 20], Media.health_potion,
                                    "HP(10)"))
                     elif consumable_type == 'WaterPotion':
                         consumables.append(
-                            Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], water_potion,
+                            Potion([random.randint(0, 1460), random.randint(0, 840)], [50, 50], Media.water_potion,
                                    "O"))
                     elif consumable_type == 'Boom':
                         consumables.append(
-                            Boom([random.randint(0, 1460), random.randint(0, 840)], [50, 50], boom,
-                                   5))
+                            Boom([random.randint(0, 1460), random.randint(0, 840)], [50, 50], Media.boom,
+                                 5))
 
         return consumables
 
@@ -118,7 +103,7 @@ class Scenery:
     @staticmethod
     def load_obstacle_map(filename):
 
-        object = []
+        items = []
 
         with open(filename, 'r') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -128,12 +113,12 @@ class Scenery:
                 block_type = row['type'].lower()
 
                 if block_type == 'stone_block':
-                    object.append(Wall([x, y], [20, 20], stone_block,False))
+                    items.append(Wall([x, y], [20, 20], Media.stone_block, False))
                 elif block_type == 'cobblestone_block':
-                    object.append(Wall([x, y], [20, 20], cobblestone_block, True))
+                    items.append(Wall([x, y], [20, 20], Media.cobblestone_block, True))
                 elif block_type == "water_block":
-                    object.append(Water([x, y], [20, 20], water_block))
-        return object
+                    items.append(Water([x, y], [20, 20], Media.water_block))
+        return items
 
     def render(self):
         self.screen.fill((0, 0, 0))
@@ -142,8 +127,6 @@ class Scenery:
         pygame.draw.rect(self.screen, (0, 0, 0), (880, 20, 600, 100))
         text = self.font.render("Score: " + str(self.player.score), 1, (255, 255, 255))
         self.screen.blit(text, (900, 60))
-
-
 
         if self.player.inventory:
             pygame.draw.rect(self.screen, (0, 0, 0), (20, 20, 600, 50))
@@ -178,8 +161,8 @@ class Scenery:
         for consumable in self.consumable_list:
             self.screen.blit(consumable.image, (consumable.position[0], consumable.position[1]))
 
-        for object in self.obstacles:
-            self.screen.blit(object.image, (object.position[0], object.position[1]))
+        for item in self.obstacles:
+            self.screen.blit(item.image, (item.position[0], item.position[1]))
         if not self.player.backpack.equipped:
             self.screen.blit(self.player.backpack.image,
                              (self.player.backpack.position[0], self.player.backpack.position[1]))

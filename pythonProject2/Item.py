@@ -1,4 +1,4 @@
-class Object:
+class Item:#Refactorizar
     def __init__(self, position, size, image):
         self.position = position
         self.size = size

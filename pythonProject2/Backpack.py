@@ -1,7 +1,7 @@
-from Object import Object
+from Item import Item
 
 
-class BackPack(Object):
+class BackPack(Item):
 
     def __init__(self, position, size, image):
         super().__init__(position, size, image)
@@ -13,7 +13,7 @@ class BackPack(Object):
         self.image = image
 
     def add_item(self, item):
-        if isinstance(item, Object):
+        if isinstance(item, Item):
             if item not in self.items:
                 self.items[item] = 1
             else:
